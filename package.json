@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "check-update": "ncu -a"
+  },
+  "dependencies": {
+    "npm-check-updates": "^2.14.2"
+  }
+}
