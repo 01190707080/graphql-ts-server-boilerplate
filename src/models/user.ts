@@ -26,4 +26,4 @@ UserSchema.pre<IUserModel>("save", function(next) {
   });
 });
 
-export default mongoose.model("User", UserSchema);
+export default mongoose.model<IUserModel>("User", UserSchema);
