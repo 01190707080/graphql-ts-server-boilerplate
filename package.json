@@ -1,13 +1,20 @@
 {
   "scripts": {
     "start": "nodemon --exec ts-node src/index.ts",
+    "gen-schema-types": "gql2ts src/schema.graphql -o src/types/schema.d.ts",
     "check-update": "ncu -a"
   },
   "dependencies": {
-    "graphql-yoga": "^1.16.2"
+    "bcryptjs": "^2.4.3",
+    "graphql-import": "^0.7.0",
+    "graphql-yoga": "^1.16.2",
+    "mongoose": "^5.2.13"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.1",
+    "@types/mongoose": "^5.2.11",
     "@types/node": "^10.9.4",
+    "gql2ts": "^1.8.2",
     "nodemon": "^1.18.4",
     "npm-check-updates": "^2.14.2",
     "ts-node": "^7.0.1",
