@@ -1,8 +1,18 @@
 {
   "scripts": {
+    "start": "nodemon --exec ts-node src/index.ts",
     "check-update": "ncu -a"
   },
   "dependencies": {
-    "npm-check-updates": "^2.14.2"
+    "graphql-yoga": "^1.16.2"
+  },
+  "devDependencies": {
+    "@types/node": "^10.9.4",
+    "nodemon": "^1.18.4",
+    "npm-check-updates": "^2.14.2",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
+    "typescript": "^3.0.3"
   }
 }
