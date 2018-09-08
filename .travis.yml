@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+  - "8"
+dist: trusty
+services:
+  - docker
+cache:
+  directories:
+    - node_modules
+before_install:
+  - bash scripts/before_install.sh
+install:
+  - bash scripts/install.sh
+script:
+  - bash scripts/build.sh
+  - bash scripts/test.sh
+after_success:
+  - bash scripts/deploy.sh
