@@ -4,6 +4,7 @@ import { ResolverMap } from "../../types/graphql-utils";
 import { GQL } from "../../types/schema";
 import { User } from "../../models/user";
 import { formatYupError } from "../../utils/formatYupError";
+import { createConfirmEmailLink } from "../../utils/createConfirmEmailLink";
 import {
   emailNotLongEnough,
   invalidEmail,
@@ -24,7 +25,11 @@ export const resolvers: ResolverMap = {
     bye: () => "bye"
   },
   Mutation: {
-    register: async (_, args: GQL.IRegisterOnMutationArguments) => {
+    register: async (
+      _,
+      args: GQL.IRegisterOnMutationArguments,
+      { redis, url }
+    ) => {
       try {
         await schema.validate(args, { abortEarly: false });
       } catch (err) {
@@ -48,7 +53,11 @@ export const resolvers: ResolverMap = {
         email,
         password
       });
+
       await user.save();
+
+      const link = await createConfirmEmailLink(url, user.id, redis);
+
       return null;
     }
   }

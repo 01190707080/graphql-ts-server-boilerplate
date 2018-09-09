@@ -10,6 +10,7 @@ export interface IUserModel extends Document {
 const UserSchema = new Schema({
   email: { type: String, unique: true },
   password: String,
+  confirmed: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now }
 });
 
