@@ -12,13 +12,15 @@
     "graphql-request": "^1.8.2",
     "graphql-tools": "^3.1.1",
     "graphql-yoga": "^1.16.2",
-    "mongoose": "^5.2.13"
+    "mongoose": "^5.2.13",
+    "yup": "^0.26.3"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.1",
     "@types/jest": "^23.3.2",
     "@types/mongoose": "^5.2.11",
     "@types/node": "^10.9.4",
+    "@types/yup": "^0.24.9",
     "gql2ts": "^1.8.2",
     "jest": "^23.5.0",
     "nodemon": "^1.18.4",
