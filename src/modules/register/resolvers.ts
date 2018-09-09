@@ -11,12 +11,23 @@ export const resolvers: ResolverMap = {
       _,
       { email, password }: GQL.IRegisterOnMutationArguments
     ) => {
+      const userAlreadyExists = await User.findOne({ email }, { _id: 1 });
+
+      if (userAlreadyExists) {
+        return [
+          {
+            path: "email",
+            message: "already taken"
+          }
+        ];
+      }
+
       const user = new User({
         email,
         password
       });
       await user.save();
-      return true;
+      return null;
     }
   }
 };
