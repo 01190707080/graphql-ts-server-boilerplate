@@ -5,6 +5,7 @@ dist: trusty
 services:
   - docker
   - mongodb
+  - redis-server
 cache:
   directories:
     - node_modules
