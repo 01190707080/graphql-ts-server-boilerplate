@@ -4,6 +4,7 @@ import * as bcrypt from "bcryptjs";
 export interface IUserModel extends Document {
   email: string;
   password: string;
+  confirmed: boolean;
   createdAt: Date;
 }
 

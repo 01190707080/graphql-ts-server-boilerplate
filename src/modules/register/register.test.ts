@@ -1,6 +1,6 @@
 import { request } from "graphql-request";
 
-import { startServer } from "../../startServer";
+import createMongoDBConn from "../../utils/createMongoDBConn";
 import { User } from "../../models/user";
 import {
   duplicateEmail,
@@ -10,7 +10,7 @@ import {
 } from "./errorMessages";
 
 beforeAll(async () => {
-  await startServer();
+  await createMongoDBConn();
 });
 
 const email = "test@gamil.com";

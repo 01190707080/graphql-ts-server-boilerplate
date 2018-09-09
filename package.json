@@ -14,6 +14,7 @@
     "graphql-yoga": "^1.16.2",
     "ioredis": "^4.0.0",
     "mongoose": "^5.2.13",
+    "node-fetch": "^2.2.0",
     "uuid": "^3.3.2",
     "yup": "^0.26.3"
   },
@@ -23,6 +24,7 @@
     "@types/jest": "^23.3.2",
     "@types/mongoose": "^5.2.11",
     "@types/node": "^10.9.4",
+    "@types/node-fetch": "^2.1.2",
     "@types/uuid": "^3.4.4",
     "@types/yup": "^0.24.9",
     "gql2ts": "^1.8.2",
