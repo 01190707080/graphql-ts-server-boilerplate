@@ -1,11 +1,14 @@
 import { request } from "graphql-request";
 
-import { host } from "./constants";
 import User from "../models/user";
-import createMongoDBConn from "../utils/createMongoDBConn";
+import { startServer } from "../startServer";
+
+let getHost = () => "";
 
 beforeAll(async () => {
-  await createMongoDBConn();
+  const app = await startServer();
+  const { port } = app.address();
+  getHost = () => `http://127.0.0.1:${port}`;
 });
 
 const email = "test@gamil.com";
@@ -18,7 +21,7 @@ const mutation = `
 `;
 
 test("Register user", async () => {
-  const response = await request(host, mutation);
+  const response = await request(getHost(), mutation);
   expect(response).toEqual({ register: true });
   const users = await User.find({ email });
   expect(users).toHaveLength(1);
