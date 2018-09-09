@@ -36,6 +36,7 @@
     "typescript": "^3.0.3"
   },
   "jest": {
+    "globalSetup": "./src/testSetup/callSetup.js",
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
