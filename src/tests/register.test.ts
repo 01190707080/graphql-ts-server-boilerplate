@@ -2,6 +2,11 @@ import { request } from "graphql-request";
 
 import { host } from "./constants";
 import User from "../models/user";
+import createMongoDBConn from "../utils/createMongoDBConn";
+
+beforeAll(async () => {
+  await createMongoDBConn();
+});
 
 const email = "test@gamil.com";
 const password = "jalksdf";

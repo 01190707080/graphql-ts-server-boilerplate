@@ -1,13 +1,13 @@
-import { mongoose } from "../config/database";
+import { Document, Schema, model } from "mongoose";
 import * as bcrypt from "bcryptjs";
 
-export interface IUserModel extends mongoose.Document {
+export interface IUserModel extends Document {
   email: string;
   password: string;
   createdAt: Date;
 }
 
-const UserSchema = new mongoose.Schema({
+const UserSchema = new Schema({
   email: { type: String, unique: true },
   password: String,
   createdAt: { type: Date, default: Date.now }
@@ -26,4 +26,4 @@ UserSchema.pre<IUserModel>("save", function(next) {
   });
 });
 
-export default mongoose.model<IUserModel>("User", UserSchema);
+export default model<IUserModel>("User", UserSchema);
