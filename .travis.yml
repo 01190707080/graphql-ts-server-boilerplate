@@ -4,6 +4,7 @@ node_js:
 dist: trusty
 services:
   - docker
+  - mongodb
 cache:
   directories:
     - node_modules
