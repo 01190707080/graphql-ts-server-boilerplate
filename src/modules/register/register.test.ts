@@ -1,7 +1,7 @@
 import { request } from "graphql-request";
 
-import User from "../models/user";
-import { startServer } from "../startServer";
+import { startServer } from "../../startServer";
+import { User } from "../../models/user";
 
 let getHost = () => "";
 

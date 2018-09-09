@@ -1,11 +1,10 @@
-import { ResolverMap } from "./types/graphql-utils";
-import { GQL } from "./types/schema";
-import User from "./models/user";
+import { ResolverMap } from "../../types/graphql-utils";
+import { GQL } from "../../types/schema";
+import { User } from "../../models/user";
 
 export const resolvers: ResolverMap = {
   Query: {
-    hello: (_, { name }: GQL.IHelloOnQueryArguments) =>
-      `Hello ${name || "World"}`
+    bye: () => "bye"
   },
   Mutation: {
     register: async (
