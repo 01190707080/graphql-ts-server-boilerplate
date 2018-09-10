@@ -5,6 +5,7 @@ import { GQL } from "../../types/schema";
 import { User } from "../../models/user";
 import { formatYupError } from "../../utils/formatYupError";
 import { createConfirmEmailLink } from "../../utils/createConfirmEmailLink";
+import { sendEmail } from "../../utils/sendEmail";
 import {
   emailNotLongEnough,
   invalidEmail,
@@ -56,7 +57,12 @@ export const resolvers: ResolverMap = {
 
       await user.save();
 
-      await createConfirmEmailLink(url, user._id, redis);
+      if (process.env.NODE_ENV !== "test") {
+        await sendEmail(
+          email,
+          await createConfirmEmailLink(url, user._id, redis)
+        );
+      }
 
       return null;
     }

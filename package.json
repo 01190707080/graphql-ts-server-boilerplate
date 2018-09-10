@@ -9,6 +9,7 @@
   "dependencies": {
     "@gql2ts/from-schema": "^1.8.2",
     "bcryptjs": "^2.4.3",
+    "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "graphql-import": "^0.7.0",
     "graphql-request": "^1.8.2",
@@ -17,6 +18,7 @@
     "ioredis": "^4.0.0",
     "mongoose": "^5.2.13",
     "node-fetch": "^2.2.0",
+    "sparkpost": "^2.1.2",
     "uuid": "^3.3.2",
     "yup": "^0.26.3"
   },
@@ -28,6 +30,7 @@
     "@types/mongoose": "^5.2.11",
     "@types/node": "^10.9.4",
     "@types/node-fetch": "^2.1.2",
+    "@types/sparkpost": "^2.1.4",
     "@types/uuid": "^3.4.4",
     "@types/yup": "^0.24.9",
     "gql2ts": "^1.8.2",
