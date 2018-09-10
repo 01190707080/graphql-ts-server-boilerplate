@@ -15,7 +15,8 @@ export const startServer = async () => {
     schema: genSchema(),
     context: ({ request }) => ({
       redis,
-      url: request.protocol + "://" + request.get("host")
+      url: request.protocol + "://" + request.get("host"),
+      session: request.session
     })
   });
 
@@ -38,7 +39,10 @@ export const startServer = async () => {
 
   const cors = {
     credentials: true,
-    origin: "http://localhost:3000"
+    origin:
+      process.env.NODE_ENV === "test"
+        ? "*"
+        : (process.env.FRONTEND_HOST as string)
   };
 
   server.express.get("/confirm/:id", confirmEmail);
