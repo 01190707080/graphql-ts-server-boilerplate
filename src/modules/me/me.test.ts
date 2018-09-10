@@ -1,7 +1,6 @@
-import axios from "axios";
-
 import { User } from "../../models/user";
 import createMongoDBConn from "../../utils/createMongoDBConn";
+import { TestClient } from "../../utils/TestClient";
 
 let userId: string;
 const email = "bob5@bob.com";
@@ -17,54 +16,19 @@ beforeAll(async () => {
   userId = user._id;
 });
 
-const loginMutation = (e: string, p: string) => `
-  mutation {
-    login(email: "${e}", password: "${p}") {
-      path
-      message
-    }
-  }
-`;
-
-const meQuery = `
-  {
-    me {
-      _id
-      email
-    }
-  }
-`;
-
 describe("me", () => {
   test("return null if no cookie", async () => {
-    const response = await axios.post(process.env.TEST_HOST as string, {
-      query: meQuery
-    });
-    expect(response.data.data.me).toBeNull();
+    const client = new TestClient(process.env.TEST_HOST as string);
+    const response = await client.me();
+    expect(response.data.me).toBeNull();
   });
 
   test("get current user", async () => {
-    await axios.post(
-      process.env.TEST_HOST as string,
-      {
-        query: loginMutation(email, password)
-      },
-      {
-        withCredentials: true
-      }
-    );
+    const client = new TestClient(process.env.TEST_HOST as string);
+    await client.login(email, password);
+    const response = await client.me();
 
-    const response = await axios.post(
-      process.env.TEST_HOST as string,
-      {
-        query: meQuery
-      },
-      {
-        withCredentials: true
-      }
-    );
-
-    expect(response.data.data).toEqual({
+    expect(response.data).toEqual({
       me: {
         _id: userId.toString(),
         email
