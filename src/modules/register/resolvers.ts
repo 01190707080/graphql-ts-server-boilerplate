@@ -4,8 +4,8 @@ import { ResolverMap } from "../../types/graphql-utils";
 import { GQL } from "../../types/schema";
 import { User } from "../../models/user";
 import { formatYupError } from "../../utils/formatYupError";
-import { createConfirmEmailLink } from "../../utils/createConfirmEmailLink";
-import { sendEmail } from "../../utils/sendEmail";
+// import { createConfirmEmailLink } from "../../utils/createConfirmEmailLink";
+// import { sendEmail } from "../../utils/sendEmail";
 import {
   emailNotLongEnough,
   invalidEmail,
@@ -28,8 +28,8 @@ export const resolvers: ResolverMap = {
   Mutation: {
     register: async (
       _,
-      args: GQL.IRegisterOnMutationArguments,
-      { redis, url }
+      args: GQL.IRegisterOnMutationArguments
+      // { redis, url }
     ) => {
       try {
         await schema.validate(args, { abortEarly: false });
@@ -57,12 +57,12 @@ export const resolvers: ResolverMap = {
 
       await user.save();
 
-      if (process.env.NODE_ENV !== "test") {
-        await sendEmail(
-          email,
-          await createConfirmEmailLink(url, user._id, redis)
-        );
-      }
+      // if (process.env.NODE_ENV !== "test") {
+      //   await sendEmail(
+      //     email,
+      //     await createConfirmEmailLink(url, user._id, redis)
+      //   );
+      // }
 
       return null;
     }
