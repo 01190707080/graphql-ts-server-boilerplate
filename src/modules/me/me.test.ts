@@ -29,7 +29,7 @@ const loginMutation = (e: string, p: string) => `
 const meQuery = `
   {
     me {
-      id
+      _id
       email
     }
   }
@@ -59,7 +59,7 @@ describe("me", () => {
 
     expect(response.data.data).toEqual({
       me: {
-        _id: userId,
+        _id: userId.toString(),
         email
       }
     });
