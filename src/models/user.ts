@@ -5,6 +5,7 @@ export interface IUserModel extends Document {
   email: string;
   password: string;
   confirmed: boolean;
+  forgotPasswordLocked: boolean;
   createdAt: Date;
 }
 
@@ -12,6 +13,7 @@ const UserSchema = new Schema({
   email: { type: String, unique: true },
   password: String,
   confirmed: { type: Boolean, default: false },
+  forgotPasswordLocked: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now }
 });
 

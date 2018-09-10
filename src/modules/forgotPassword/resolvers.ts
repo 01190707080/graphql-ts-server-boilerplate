@@ -1,15 +1,10 @@
 import * as bcrypt from "bcryptjs";
 
 import { ResolverMap } from "../../types/graphql-utils";
-import {
-  invalidLogin,
-  confirmEmailError,
-  forgotPasswordLockedError
-} from "./errorMessages";
-import { User } from "../../models/user";
-import { GQL } from "../../types/schema";
+import { invalidLogin, confirmEmailError } from "../login/errorMessages";
 import { userSessionIdPrefix } from "../../constants";
-import { redis } from "../../redis";
+import { GQL } from "../../types/schema";
+import { User } from "../../models/user";
 
 const errorResponse = [
   {
@@ -20,15 +15,15 @@ const errorResponse = [
 
 export const resolvers: ResolverMap = {
   Query: {
-    bye2: () => "bye"
+    dummy2: () => "bye"
   },
   Mutation: {
     login: async (
       _,
       { email, password }: GQL.ILoginOnMutationArguments,
-      { session, req }
+      { session, redis, req }
     ) => {
-      const user = await User.findOne({ email });
+      const user = await User.findOne({ where: { email } });
 
       if (!user) {
         return errorResponse;
@@ -43,15 +38,6 @@ export const resolvers: ResolverMap = {
         ];
       }
 
-      if (user.forgotPasswordLocked) {
-        return [
-          {
-            path: "email",
-            message: forgotPasswordLockedError
-          }
-        ];
-      }
-
       const valid = await bcrypt.compare(password, user.password);
 
       if (!valid) {
@@ -59,7 +45,7 @@ export const resolvers: ResolverMap = {
       }
 
       // login sucessful
-      session.userId = user._id;
+      session.userId = user.id;
       if (req.sessionID) {
         await redis.lpush(`${userSessionIdPrefix}${user.id}`, req.sessionID);
       }
