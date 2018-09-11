@@ -26,8 +26,6 @@ describe("logout", () => {
     // computer 2
     const sess2 = new TestClient(process.env.TEST_HOST as string);
 
-    console.log("1");
-
     await sess1.login(email, password);
     await sess2.login(email, password);
     expect(await sess1.me()).toEqual(await sess2.me());
