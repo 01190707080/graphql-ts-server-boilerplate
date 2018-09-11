@@ -11,6 +11,7 @@ import { forgotPasswordLockedError } from "../login/errorMessages";
 import { passwordNotLongEnough } from "../register/errorMessages";
 
 export const redis = new Redis();
+faker.seed(process.hrtime()[1]);
 const email = faker.internet.email();
 const password = faker.internet.password();
 const newPassword = faker.internet.password();

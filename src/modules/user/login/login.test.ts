@@ -5,6 +5,7 @@ import { invalidLogin, confirmEmailError } from "./errorMessages";
 import { User } from "../../../models/user";
 import { TestClient } from "../../../utils/TestClient";
 
+faker.seed(process.hrtime()[1]);
 const email = faker.internet.email();
 const password = faker.internet.password();
 

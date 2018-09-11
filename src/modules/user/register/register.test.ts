@@ -14,6 +14,7 @@ beforeAll(async () => {
   await createTestConn();
 });
 
+faker.seed(process.hrtime()[1]);
 const email = faker.internet.email();
 const password = faker.internet.password();
 
