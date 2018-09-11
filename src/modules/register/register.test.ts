@@ -1,4 +1,6 @@
-import createMongoDBConn from "../../utils/createMongoDBConn";
+import * as faker from "faker";
+
+import { createTestConn } from "../../testUtils/createTestConn";
 import { User } from "../../models/user";
 import {
   duplicateEmail,
@@ -9,11 +11,11 @@ import {
 import { TestClient } from "../../utils/TestClient";
 
 beforeAll(async () => {
-  await createMongoDBConn();
+  await createTestConn();
 });
 
-const email = "test@gamil.com";
-const password = "jalksdf";
+const email = faker.internet.email();
+const password = faker.internet.password();
 
 describe("Register user", async () => {
   it("check for duplicate emails", async () => {

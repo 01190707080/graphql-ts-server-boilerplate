@@ -13,11 +13,16 @@ import { confirmEmail } from "./routes/confirmEmail";
 import { genSchema } from "./utils/genSchema";
 import { redisSessionPrefix } from "./constants";
 import { User, IUserModel } from "./models/user";
+import { createTestConn } from "./testUtils/createTestConn";
 
 const SESSION_SECRET = "ajslkjalksjdfkl";
 const RedisStore = connectRedis(session);
 
 export const startServer = async () => {
+  if (process.env.NODE_ENV === "test") {
+    await redis.flushall();
+  }
+
   const server = new GraphQLServer({
     schema: genSchema(),
     context: ({ request }) => ({
@@ -67,7 +72,11 @@ export const startServer = async () => {
 
   server.express.get("/confirm/:id", confirmEmail);
 
-  await createMongoDBConn();
+  if (process.env.NODE_ENV === "test") {
+    await createTestConn(true);
+  } else {
+    await createMongoDBConn();
+  }
 
   passport.use(
     new Strategy(

@@ -1,13 +1,15 @@
+import * as faker from "faker";
+
+import { createTestConn } from "../../testUtils/createTestConn";
 import { invalidLogin, confirmEmailError } from "./errorMessages";
-import createMongoDBConn from "../../utils/createMongoDBConn";
 import { User } from "../../models/user";
 import { TestClient } from "../../utils/TestClient";
 
-const email = "tom@bob.com";
-const password = "jalksdf";
+const email = faker.internet.email();
+const password = faker.internet.password();
 
 beforeAll(async () => {
-  await createMongoDBConn();
+  await createTestConn();
 });
 
 const loginExpectError = async (
@@ -31,7 +33,12 @@ const loginExpectError = async (
 describe("login", () => {
   test("email not found send back error", async () => {
     const client = new TestClient(process.env.TEST_HOST as string);
-    await loginExpectError(client, "bob@bob.com", "whatever", invalidLogin);
+    await loginExpectError(
+      client,
+      faker.internet.email(),
+      "whatever",
+      invalidLogin
+    );
   });
 
   test("email not confirmed", async () => {

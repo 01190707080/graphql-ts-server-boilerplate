@@ -1,21 +1,23 @@
-import createMongoDBConn from "../../utils/createMongoDBConn";
+import * as Redis from "ioredis";
+import * as faker from "faker";
+
+import { createTestConn } from "../../testUtils/createTestConn";
 import { User } from "../../models/user";
 import { TestClient } from "../../utils/TestClient";
 import { createForgotPasswordLink } from "../../utils/createForgotPasswordLink";
-import * as Redis from "ioredis";
 import { forgotPasswordLockAccount } from "../../utils/forgotPasswordLockAccount";
 import { passwordNotLongEnough } from "../register/errorMessages";
 import { expiredKeyError } from "./errorMessages";
 import { forgotPasswordLockedError } from "../login/errorMessages";
 
 export const redis = new Redis();
-const email = "bob5@bob.com";
-const password = "jlkajoioiqwe";
-const newPassword = "qowuieoiqwueoq";
+const email = faker.internet.email();
+const password = faker.internet.password();
+const newPassword = faker.internet.password();
 
 let userId: string;
 beforeAll(async () => {
-  await createMongoDBConn();
+  await createTestConn();
   const user = await User.create({
     email,
     password,

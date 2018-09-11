@@ -1,13 +1,15 @@
-import createMongoDBConn from "../../utils/createMongoDBConn";
+import * as faker from "faker";
+
+import { createTestConn } from "../../testUtils/createTestConn";
 import { User } from "../../models/user";
 import { TestClient } from "../../utils/TestClient";
 
-const email = "bob5@bob.com";
-const password = "jlkajoioiqwe";
+const email = faker.internet.email();
+const password = faker.internet.password();
 
 let userId: string;
 beforeAll(async () => {
-  await createMongoDBConn();
+  await createTestConn();
   const user = await User.create({
     email,
     password,

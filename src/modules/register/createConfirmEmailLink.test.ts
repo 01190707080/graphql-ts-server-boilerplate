@@ -1,18 +1,19 @@
+import * as faker from "faker";
 import * as Redis from "ioredis";
 import fetch from "node-fetch";
 
-import createMongoDBConn from "./createMongoDBConn";
+import { createTestConn } from "../../testUtils/createTestConn";
+import { User, IUserModel } from "../../models/user";
 import { createConfirmEmailLink } from "./createConfirmEmailLink";
-import { User, IUserModel } from "../models/user";
 
 let userId = "";
 const redis = new Redis();
 
 beforeAll(async () => {
-  await createMongoDBConn();
+  await createTestConn();
   const user = await User.create({
-    email: "test@gmail.com",
-    password: "jlkajoioiqwe"
+    email: faker.internet.email(),
+    password: faker.internet.password()
   });
   userId = user._id;
 });
