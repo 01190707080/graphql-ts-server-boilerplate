@@ -76,69 +76,69 @@ export const startServer = async () => {
     await createTestConn(true);
   } else {
     await createMongoDBConn();
-  }
 
-  passport.use(
-    new Strategy(
-      {
-        consumerKey: process.env.TWITTER_CONSUMER_KEY as string,
-        consumerSecret: process.env.TWITTER_CONSUMER_SECRET as string,
-        callbackURL: "http://localhost:4000/auth/twitter/callback",
-        includeEmail: true
-      },
-      async (_, __, profile, cb) => {
-        const { id, emails } = profile;
-
-        let email: string | null = null;
-
-        if (emails) {
-          email = emails[0].value;
-        }
-
-        const user = User.findOne({
-          $or: [{ twitterId: id }, { email }]
-        });
-
-        if (!user) {
-          // this user needs to be registered
-          (user as IUserModel) = await User.create({
-            twitterId: id,
-            email
+    passport.use(
+      new Strategy(
+        {
+          consumerKey: process.env.TWITTER_CONSUMER_KEY as string,
+          consumerSecret: process.env.TWITTER_CONSUMER_SECRET as string,
+          callbackURL: "http://localhost:4000/auth/twitter/callback",
+          includeEmail: true
+        },
+        async (_, __, profile, cb) => {
+          const { id, emails } = profile;
+  
+          let email: string | null = null;
+  
+          if (emails) {
+            email = emails[0].value;
+          }
+  
+          const user = User.findOne({
+            $or: [{ twitterId: id }, { email }]
           });
-        } else if (!(user as any).twitterId) {
-          // merge account
-          // we found user by email
-          User.update(
-            {
-              _id: (user as any)._id
-            },
-            {
-              twitterId: id
-            }
-          );
-        } else {
-          // we have a twitterId
-          // login
+  
+          if (!user) {
+            // this user needs to be registered
+            (user as IUserModel) = await User.create({
+              twitterId: id,
+              email
+            });
+          } else if (!(user as any).twitterId) {
+            // merge account
+            // we found user by email
+            User.update(
+              {
+                _id: (user as any)._id
+              },
+              {
+                twitterId: id
+              }
+            );
+          } else {
+            // we have a twitterId
+            // login
+          }
+  
+          return cb(null, { _id: (user as any)._id });
         }
-
-        return cb(null, { _id: (user as any)._id });
+      )
+    );
+  
+    server.express.use(passport.initialize());
+  
+    server.express.get("/auth/twitter", passport.authenticate("twitter"));
+  
+    server.express.get(
+      "/auth/twitter/callback",
+      passport.authenticate("twitter", { session: false }),
+      (req, res) => {
+        (req.session as any).userId = (req.user as any)._id;
+        // @todo redirect to frontend
+        res.redirect("/");
       }
-    )
-  );
-
-  server.express.use(passport.initialize());
-
-  server.express.get("/auth/twitter", passport.authenticate("twitter"));
-
-  server.express.get(
-    "/auth/twitter/callback",
-    passport.authenticate("twitter", { session: false }),
-    (req, res) => {
-      (req.session as any).userId = (req.user as any)._id;
-      // @todo redirect to frontend
-      res.redirect("/");
-    }
-  );
+    );
+  }
 
   const app = await server.start({
     cors,
