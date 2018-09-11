@@ -2,8 +2,8 @@ import * as faker from "faker";
 import * as Redis from "ioredis";
 import fetch from "node-fetch";
 
-import { createTestConn } from "../../testUtils/createTestConn";
-import { User, IUserModel } from "../../models/user";
+import { createTestConn } from "../../../testUtils/createTestConn";
+import { User, IUserModel } from "../../../models/user";
 import { createConfirmEmailLink } from "./createConfirmEmailLink";
 
 let userId = "";

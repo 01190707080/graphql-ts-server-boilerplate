@@ -1,14 +1,14 @@
 import * as faker from "faker";
 
-import { createTestConn } from "../../testUtils/createTestConn";
-import { User } from "../../models/user";
+import { createTestConn } from "../../../testUtils/createTestConn";
+import { TestClient } from "../../../utils/TestClient";
+import { User } from "../../../models/user";
 import {
+  passwordNotLongEnough,
   duplicateEmail,
   emailNotLongEnough,
-  invalidEmail,
-  passwordNotLongEnough
+  invalidEmail
 } from "./errorMessages";
-import { TestClient } from "../../utils/TestClient";
 
 beforeAll(async () => {
   await createTestConn();

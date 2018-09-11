@@ -1,8 +1,8 @@
 import * as faker from "faker";
 
-import { createTestConn } from "../../testUtils/createTestConn";
-import { User } from "../../models/user";
-import { TestClient } from "../../utils/TestClient";
+import { createTestConn } from "../../../testUtils/createTestConn";
+import { User } from "../../../models/user";
+import { TestClient } from "../../../utils/TestClient";
 
 let userId: string;
 const email = faker.internet.email();

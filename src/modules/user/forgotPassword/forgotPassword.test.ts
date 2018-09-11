@@ -1,14 +1,14 @@
 import * as Redis from "ioredis";
 import * as faker from "faker";
 
-import { createTestConn } from "../../testUtils/createTestConn";
-import { User } from "../../models/user";
-import { TestClient } from "../../utils/TestClient";
-import { createForgotPasswordLink } from "../../utils/createForgotPasswordLink";
-import { forgotPasswordLockAccount } from "../../utils/forgotPasswordLockAccount";
-import { passwordNotLongEnough } from "../register/errorMessages";
+import { createTestConn } from "../../../testUtils/createTestConn";
+import { User } from "../../../models/user";
+import { TestClient } from "../../../utils/TestClient";
+import { createForgotPasswordLink } from "../../../utils/createForgotPasswordLink";
+import { forgotPasswordLockAccount } from "../../../utils/forgotPasswordLockAccount";
 import { expiredKeyError } from "./errorMessages";
 import { forgotPasswordLockedError } from "../login/errorMessages";
+import { passwordNotLongEnough } from "../register/errorMessages";
 
 export const redis = new Redis();
 const email = faker.internet.email();

@@ -1,8 +1,8 @@
 import * as faker from "faker";
 
-import { createTestConn } from "../../testUtils/createTestConn";
-import { User } from "../../models/user";
-import { TestClient } from "../../utils/TestClient";
+import { createTestConn } from "../../../testUtils/createTestConn";
+import { User } from "../../../models/user";
+import { TestClient } from "../../../utils/TestClient";
 
 const email = faker.internet.email();
 const password = faker.internet.password();
@@ -24,6 +24,8 @@ describe("logout", () => {
     const sess1 = new TestClient(process.env.TEST_HOST as string);
     // computer 2
     const sess2 = new TestClient(process.env.TEST_HOST as string);
+
+    console.log("1");
 
     await sess1.login(email, password);
     await sess2.login(email, password);

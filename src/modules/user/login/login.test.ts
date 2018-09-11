@@ -1,9 +1,9 @@
 import * as faker from "faker";
 
-import { createTestConn } from "../../testUtils/createTestConn";
+import { createTestConn } from "../../../testUtils/createTestConn";
 import { invalidLogin, confirmEmailError } from "./errorMessages";
-import { User } from "../../models/user";
-import { TestClient } from "../../utils/TestClient";
+import { User } from "../../../models/user";
+import { TestClient } from "../../../utils/TestClient";
 
 const email = faker.internet.email();
 const password = faker.internet.password();

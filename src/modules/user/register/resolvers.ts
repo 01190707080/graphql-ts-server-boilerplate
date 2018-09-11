@@ -1,13 +1,13 @@
 import * as yup from "yup";
 
-import { ResolverMap } from "../../types/graphql-utils";
-import { GQL } from "../../types/schema";
-import { User } from "../../models/user";
-import { formatYupError } from "../../utils/formatYupError";
 // import { createConfirmEmailLink } from "../../utils/createConfirmEmailLink";
 // import { sendEmail } from "../../utils/sendEmail";
-import { registerPasswordValidation } from "../../yupSchemas";
 import { emailNotLongEnough, invalidEmail } from "./errorMessages";
+import { registerPasswordValidation } from "../../../yupSchemas";
+import { ResolverMap } from "../../../types/graphql-utils";
+import { GQL } from "../../../types/schema";
+import { formatYupError } from "../../../utils/formatYupError";
+import { User } from "../../../models/user";
 
 const schema = yup.object().shape({
   email: yup
@@ -19,9 +19,6 @@ const schema = yup.object().shape({
 });
 
 export const resolvers: ResolverMap = {
-  Query: {
-    bye: () => "bye"
-  },
   Mutation: {
     register: async (
       _,

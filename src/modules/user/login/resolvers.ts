@@ -1,15 +1,15 @@
 import * as bcrypt from "bcryptjs";
 
-import { ResolverMap } from "../../types/graphql-utils";
+import { ResolverMap } from "../../../types/graphql-utils";
 import {
   invalidLogin,
   confirmEmailError,
   forgotPasswordLockedError
 } from "./errorMessages";
-import { User } from "../../models/user";
-import { GQL } from "../../types/schema";
-import { userSessionIdPrefix } from "../../constants";
-import { redis } from "../../redis";
+import { User } from "../../../models/user";
+import { GQL } from "../../../types/schema";
+import { userSessionIdPrefix } from "../../../constants";
+import { redis } from "../../../redis";
 
 const errorResponse = [
   {
@@ -19,9 +19,6 @@ const errorResponse = [
 ];
 
 export const resolvers: ResolverMap = {
-  Query: {
-    bye2: () => "bye"
-  },
   Mutation: {
     login: async (
       _,
@@ -52,7 +49,7 @@ export const resolvers: ResolverMap = {
         ];
       }
 
-      const valid = await bcrypt.compare(password, user.password);
+      const valid = await bcrypt.compare(password, user.password as string);
 
       if (!valid) {
         return errorResponse;
